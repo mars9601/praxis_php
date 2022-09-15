@@ -41,10 +41,7 @@ include("templates/footer.inc.php")
 
 </table>
 </div>
-
-
 </div>
-
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -59,15 +56,7 @@ include("templates/footer.inc.php")
 			<div class="card">
 				<div style="border: 1px solid #dddddd; border-radius: 4px; padding:10px 5px 15px 20px;" class="card-body">
 					<div class="form-group">
-						<select class="form-group">
-							<?php
-        						echo json_encode($data);
-							?>
-						</select>
-
-
-
-						<!-- <h2 class="mb-4">Welches Gerät wurde benutzt ?</h2>
+						<h2 class="mb-4">Welches Gerät wurde benutzt ?</h2>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="programming_geraete_name" class="programming_geraete_name" id="programming_geraete_name_1" value="Therapie-Liege" checked>
 							<label class="form-check" for="programming_geraete_name_1">Therapie-Liege</label>
@@ -80,7 +69,7 @@ include("templates/footer.inc.php")
 							<input class="form-check-input" type="radio" name="programming_geraete_name" class="programming_geraete_name" id="programming_geraete_name_3" value="Sprossenwand">
 							<label class="form-check" for="programming_geraete_name_3">Sprossenwand</label>
 						</div>
-					</div> -->
+					</div>
 					<div class="form-group">
 						<button type="button" name="submit_data" class="btn btn-primary" id="submit_data">Zu Statistik hinzufügen</button>
 						<button type="button" name="remove_data" class="btn btn-primary" id="remove_data">Gerät zurücksetzen</button>
