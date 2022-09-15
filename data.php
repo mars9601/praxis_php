@@ -66,8 +66,9 @@ if(isset($_POST["action"]))
 				'color'			=>	'#' . rand(100000, 999999) . ''
 			);
 		}
-
+		file_put_contents("geraete.json",json_encode($data));
 		echo json_encode($data);
+		
 	}
 }
 

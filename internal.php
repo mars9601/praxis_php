@@ -39,6 +39,10 @@ while($row = $statement->fetch()) {
 include("templates/footer.inc.php")
 ?>
 
+<?php
+$data = json_decode(file_get_contents('geraete.json'), true);
+?>
+
 </table>
 </div>
 
@@ -59,16 +63,24 @@ include("templates/footer.inc.php")
 			<div class="card">
 				<div style="border: 1px solid #dddddd; border-radius: 4px; padding:10px 5px 15px 20px;" class="card-body">
 					<div class="form-group">
-						<select class="form-group">
-							<?php
-        						echo json_encode($data);
-							?>
-						</select>
+						<h2 class="mb-4">Welches Gerät wurde benutzt ?</h2>
+							<div class="form-check">
+								<select id="programming_geraete_name" class="form-check-input" name="programming_geraete_name" class="programming_geraete_name">
+									<?php
+										foreach($data as $name) 
+											echo "<option value='strtolower($name)'>$name[geraete_name] </option>" ;
+											
+									?>
+									
+								</select>
+								<label class="form-check" for="programming_geraete_name">Therapie-Liege</label>
+							</div>
 
 
 
-						<!-- <h2 class="mb-4">Welches Gerät wurde benutzt ?</h2>
-						<div class="form-check">
+
+
+						<!-- <div class="form-check">
 							<input class="form-check-input" type="radio" name="programming_geraete_name" class="programming_geraete_name" id="programming_geraete_name_1" value="Therapie-Liege" checked>
 							<label class="form-check" for="programming_geraete_name_1">Therapie-Liege</label>
 						</div>
@@ -79,8 +91,8 @@ include("templates/footer.inc.php")
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="programming_geraete_name" class="programming_geraete_name" id="programming_geraete_name_3" value="Sprossenwand">
 							<label class="form-check" for="programming_geraete_name_3">Sprossenwand</label>
-						</div>
-					</div> -->
+						</div> -->
+					</div>
 					<div class="form-group">
 						<button type="button" name="submit_data" class="btn btn-primary" id="submit_data">Zu Statistik hinzufügen</button>
 						<button type="button" name="remove_data" class="btn btn-primary" id="remove_data">Gerät zurücksetzen</button>
@@ -131,7 +143,7 @@ $(document).ready(function(){
 
 	$('#submit_data').click(function(){
 
-		var geraete_name = $('input[name=programming_geraete_name]:checked').val();
+		var geraete_name = $('input[name=programming_geraete_name]').val();
 
 		$.ajax({
 			url:"data.php",
@@ -145,13 +157,13 @@ $(document).ready(function(){
 			{
 				$('#submit_data').attr('disabled', false);
 
-				$('#programming_geraete_name_1').prop('checked', false);
+				$('#programming_geraete_name');
 
-				$('#programming_geraete_name_2').prop('checked', false);
+				/* $('#programming_geraete_name_2').prop('checked', false);
 
 				$('#programming_geraete_name_3').prop('checked', false);
 
-				/* alert("Eintrag aktualisiert"); */
+				alert("Eintrag aktualisiert"); */
 
 				makechart();
 			}
