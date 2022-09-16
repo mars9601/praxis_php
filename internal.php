@@ -65,15 +65,17 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 					<div class="form-group">
 						<h2 class="mb-4">Welches Gerät wurde benutzt ?</h2>
 							<div class="form-check">
-								<select id="programming_geraete_name" class="form-check-input" name="programming_geraete_name" class="programming_geraete_name">
+								<select id="comboA" class="form-check-input" name="programming_geraete_name" class="programming_geraete_name" onchange="getComboA(this)">
 									<?php
 										foreach($data as $name) 
-											echo "<option value='strtolower($name)'>$name[geraete_name] </option>" ;
-											
+											echo "<option value='strtolower($name)'>$name[geraete_name] </option>" ;	
 									?>
-									
+									<option value="">Select combo</option>
+									<option value="Value1">Text1</option>
+									<option value="Value2">Text2</option>
+									<option value="Value3">Text3</option>	
 								</select>
-								<label class="form-check" for="programming_geraete_name">Therapie-Liege</label>
+								<label class="form-check" for="programming_geraete_name"></label>
 							</div>
 
 
@@ -138,6 +140,11 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 </html>
 
 <script>
+
+function getComboA(selectObject) {
+  var value = selectObject.value;  
+  console.log(value);
+}
 	
 $(document).ready(function(){
 
