@@ -65,15 +65,11 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 					<div class="form-group">
 						<h2 class="mb-4">Welches Gerät wurde benutzt ?</h2>
 							<div class="form-check">
-								<select id="comboA" class="form-check-input" name="programming_geraete_name" class="programming_geraete_name" onchange="getComboA(this)">
+								<select id="list">
 									<?php
 										foreach($data as $name) 
-											echo "<option value='strtolower($name)'>$name[geraete_name] </option>" ;	
-									?>
-									<option value="">Select combo</option>
-									<option value="Value1">Text1</option>
-									<option value="Value2">Text2</option>
-									<option value="Value3">Text3</option>	
+											echo '<option value=' . $name['geraete_name']. '>'. $name['geraete_name'] . '</option>';	
+									?>	
 								</select>
 								<label class="form-check" for="programming_geraete_name"></label>
 							</div>
@@ -141,16 +137,14 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 
 <script>
 
-function getComboA(selectObject) {
-  var value = selectObject.value;  
-  console.log(value);
-}
+
 	
 $(document).ready(function(){
+	
 
 	$('#submit_data').click(function(){
-
-		var geraete_name = $('input[name=programming_geraete_name]').val();
+		
+		var geraete_name = document.getElementById("list").value;
 
 		$.ajax({
 			url:"data.php",
@@ -164,14 +158,6 @@ $(document).ready(function(){
 			{
 				$('#submit_data').attr('disabled', false);
 
-				$('#programming_geraete_name');
-
-				/* $('#programming_geraete_name_2').prop('checked', false);
-
-				$('#programming_geraete_name_3').prop('checked', false);
-
-				alert("Eintrag aktualisiert"); */
-
 				makechart();
 			}
 		})
@@ -183,7 +169,7 @@ $(document).ready(function(){
 
 	$('#remove_data').click(function(){
 
-		var geraete_name = $('input[name=programming_geraete_name]:checked').val();
+		var geraete_name = document.getElementById("list").value;
 
 		$.ajax({
 			url:"data.php",
@@ -196,14 +182,6 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$('#remove_data').attr('disabled', false);
-
-				$('#programming_geraete_name_1').prop('checked', false);
-
-				$('#programming_geraete_name_2').prop('checked', false);
-
-				$('#programming_geraete_name_3').prop('checked', false);
-
-				/* alert("Eintrag aktualisiert"); */
 
 				makechart();
 			}

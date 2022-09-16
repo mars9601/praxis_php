@@ -57,6 +57,7 @@ if(isset($_POST["action"]))
 		$result = $connect->query($query);
 
 		$data = array();
+		$list= array();
 
 		foreach($result as $row)
 		{
@@ -65,8 +66,11 @@ if(isset($_POST["action"]))
 				'total'			=>	$row["Total"],
 				'color'			=>	'#' . rand(100000, 999999) . ''
 			);
+			$list[] = array(
+				'geraete_name'		=>	$row["geraete_name"],
+			);
 		}
-		file_put_contents("geraete.json",json_encode($data));
+		file_put_contents("geraete.json",json_encode($list));
 		echo json_encode($data);
 		
 	}
