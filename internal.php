@@ -144,7 +144,7 @@ $(document).ready(function(){
 
 	$('#submit_data').click(function(){
 		
-		var geraete_name = document.getElementById("list").value;
+		var geraete_name = [document.getElementById("list").value,"<?php echo $user['id'] ?>"];
 
 		$.ajax({
 			url:"data.php",
@@ -159,6 +159,7 @@ $(document).ready(function(){
 				$('#submit_data').attr('disabled', false);
 
 				makechart();
+				makechart_id();
 			}
 		})
 
@@ -184,6 +185,7 @@ $(document).ready(function(){
 				$('#remove_data').attr('disabled', false);
 
 				makechart();
+				makechart_id();
 			}
 		})
 
@@ -193,7 +195,7 @@ $(document).ready(function(){
 
 
 
-
+	makechart_id();
 	makechart();
 
 	function makechart()
@@ -253,7 +255,55 @@ $(document).ready(function(){
 					type:"doughnut",
 					data:chart_data
 				});
+			}
+		})
+	}
 
+
+	function makechart_id(){
+
+		var geraete_name = [document.getElementById("list").value,"<?php echo $user['id'] ?>"];
+
+		$.ajax({
+			url:"data.php",
+			method:"POST",
+			data:{action:'fetch_id', geraete_name:geraete_name},
+			dataType:"JSON",
+			success:function(data)
+			{
+				var geraete_name = [];
+				var total = [];
+				var color = [];
+
+				for(var count = 0; count < data.length; count++)
+				{
+					geraete_name.push(data[count].geraete_name);
+					total.push(data[count].total);
+					color.push(data[count].color);
+				}
+
+				var chart_data = {
+					labels:geraete_name,
+					datasets:[
+						{
+							label:'Nutzung',
+							backgroundColor:color,
+							color:'#fff',
+							data:total
+						}
+					]
+				};
+
+				var options = {
+					responsive:true,
+					scales:{
+						yAxes:[{
+							ticks:{
+								min:0
+							}
+						}]
+					}
+				};
 				var group_chart3 = $('#bar_chart');
 
 				var graph3 = new Chart(group_chart3, {
@@ -264,6 +314,7 @@ $(document).ready(function(){
 			}
 		})
 	}
+
 
 });
 

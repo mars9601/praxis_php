@@ -9,13 +9,14 @@ if(isset($_POST["action"]))
 	if($_POST["action"] == 'insert')
 	{
 		$data = array(
-			':geraete_name'		=>	$_POST["geraete_name"]
+			':geraete_name'		=>	$_POST["geraete_name"][0],
+			':user_id'		=>	$_POST["geraete_name"][1]
 		);
 
 		$query = "
-		INSERT INTO geraete_liste 
-		(geraete_name) VALUES (:geraete_name)
-		";
+		INSERT INTO geraete_liste (geraete_name,user_id) 
+		VALUES (:geraete_name,:user_id)"
+		;
 
 		$statement = $connect->prepare($query);
 
@@ -76,11 +77,18 @@ if(isset($_POST["action"]))
 		
 	}
 	
-	if($_POST["action"] == 'fetch')
+
+	if($_POST["action"] == 'fetch_id')
 	{
+
+		
+		
+		
+	
+		$fill = $_POST["geraete_name"][1];
 		$query = "
 		SELECT geraete_name, COUNT(geraete_id) AS Total 
-		FROM geraete_liste 
+		FROM geraete_liste WHERE (user_id) = $fill
 		GROUP BY geraete_name
 		";
 
@@ -103,8 +111,9 @@ if(isset($_POST["action"]))
 		}
 		file_put_contents("geraete.json",json_encode($list));
 		echo json_encode($data);
-		
+		file_put_contents("temp.json",json_encode($data));
 	}
+	
 }
 
 
