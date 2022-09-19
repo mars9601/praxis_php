@@ -61,6 +61,37 @@ if(isset($_POST["action"]))
 
 		foreach($result as $row)
 		{
+			srand(ord($row["geraete_name"]));
+			$data[] = array(
+				'geraete_name'		=>	$row["geraete_name"],
+				'total'			=>	$row["Total"],
+				'color'			=>	'#' . rand(100000, 999999) . ''
+			);
+			$list[] = array(
+				'geraete_name'		=>	$row["geraete_name"],
+			);
+		}
+		file_put_contents("geraete.json",json_encode($list));
+		echo json_encode($data);
+		
+	}
+	
+	if($_POST["action"] == 'fetch')
+	{
+		$query = "
+		SELECT geraete_name, COUNT(geraete_id) AS Total 
+		FROM geraete_liste 
+		GROUP BY geraete_name
+		";
+
+		$result = $connect->query($query);
+
+		$data = array();
+		$list= array();
+
+		foreach($result as $row)
+		{
+			srand(ord($row["geraete_name"]));
 			$data[] = array(
 				'geraete_name'		=>	$row["geraete_name"],
 				'total'			=>	$row["Total"],

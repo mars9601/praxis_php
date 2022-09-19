@@ -99,18 +99,8 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 			</div>
 		</div>
 		<div class="container-fluid">
-			<div class="row">
-				<!-- <div class="col-md-4" style="border: 1px solid #dddddd; border-radius: 4px; padding:10px 5px 15px 20px; margin: 20px;">
-					<div class="card mt-4">
-						<div class="card-header">Pie Chart</div>
-						<div class="card-body">
-							<div class="chart-container pie-chart">
-								<canvas id="pie_chart"></canvas>
-							</div>
-						</div>
-					</div>
-				</div> -->
-				<div class="col-md-4" style="border: 1px solid #dddddd; border-radius: 4px; padding:10px 5px 15px 20px; margin: 20px 10px 20px 230px;"> 
+			<div class="Graphrows">
+				<div class="Graph_1" style="border: 1px solid #dddddd; border-radius: 4px; justify-content: center; align-items: center; margin-left:30%; margin-right:30%;"> 
 					<div class="card mt-4">
 						<div class="card-header">Doughnut Chart</div>
 						<div class="card-body">
@@ -120,12 +110,22 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4" style="border: 1px solid #dddddd; border-radius: 4px; padding:10px 5px 15px 20px; margin: 20px 10px 30px 40px;">
+				<div class="Graph_2" style="border: 1px solid #dddddd; border-radius: 4px; justify-content: center; align-items: center; margin-left:30%; margin-right:30%;">
 					<div class="card mt-4 mb-4">
 						<div class="card-header">Bar Chart</div>
 						<div class="card-body">
 							<div class="chart-container pie-chart">
 								<canvas id="bar_chart"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="Graph_2" style="border: 1px solid #dddddd; border-radius: 4px; justify-content: center; align-items: center; margin-left:30%; margin-right:30%;">
+					<div class="card mt-4 mb-4">
+						<div class="card-header">Bar Chart</div>
+						<div class="card-body">
+							<div class="chart-container pie-chart">
+								<canvas id="bar_chart_2"></canvas>
 							</div>
 						</div>
 					</div>
@@ -239,11 +239,12 @@ $(document).ready(function(){
 					}
 				};
 
-				var group_chart1 = $('#pie_chart');
+				var group_chart1 = $('#bar_chart_2');
 
 				var graph1 = new Chart(group_chart1, {
-					type:"pie",
-					data:chart_data
+					type:"bar",
+					data:chart_data,
+					options:options
 				});
 
 				var group_chart2 = $('#doughnut_chart');
