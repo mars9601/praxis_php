@@ -73,6 +73,7 @@ if(isset($_POST["action"]))
 			);
 		}
 		file_put_contents("geraete.json",json_encode($list));
+		sleep(0.1);
 		echo json_encode($data);
 		
 	}
@@ -109,7 +110,8 @@ if(isset($_POST["action"]))
 				'geraete_name'		=>	$row["geraete_name"],
 			);
 		}
-		file_put_contents("geraete.json",json_encode($list));
+		/* file_put_contents("geraete.json",json_encode($list));
+		sleep(0.1); */
 		echo json_encode($data);
 		file_put_contents("temp.json",json_encode($data));
 	}

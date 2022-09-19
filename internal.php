@@ -41,6 +41,7 @@ include("templates/footer.inc.php")
 
 <?php
 $data = json_decode(file_get_contents('geraete.json'), true);
+sleep(0.1);
 ?>
 
 </table>
@@ -57,6 +58,26 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+		<style>
+		.grid-container {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		grid-column-gap: 0px;
+		grid-row-gap: 0px;
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+		}
+		.grid-item {
+		border: 1px solid rgba(0, 0, 0, 0.8);
+		padding: 20px;
+		font-size: 30px;
+		text-align: center;
+		}
+		.card-header{
+			font-size: 20px;
+			text-decoration: underline;
+		}
+		</style>
 	</head>
 	<body>
 		<div class="container">
@@ -65,13 +86,15 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 					<div class="form-group">
 						<h2 class="mb-4">Welches Gerät wurde benutzt ?</h2>
 							<div class="form-check">
-								<select id="list">
-									<?php
-										foreach($data as $name) 
-											echo '<option value=' . $name['geraete_name']. '>'. $name['geraete_name'] . '</option>';	
-									?>	
-								</select>
-								<label class="form-check" for="programming_geraete_name"></label>
+								<label>Auswahl:</label>
+									<select id="list">
+										<?php
+											foreach($data as $name) 
+												echo '<option value=' . $name['geraete_name']. '>'. $name['geraete_name'] . '</option>';
+										?>	
+									</select>
+								<label>Gerät hinzufügen:</label>
+								<input id="textfill" type="text" value="" placeholder="Bitte Gerätename eingeben">
 							</div>
 
 
@@ -92,27 +115,29 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 						</div> -->
 					</div>
 					<div class="form-group">
-						<button type="button" name="submit_data" class="btn btn-primary" id="submit_data">Zu Statistik hinzufügen</button>
-						<button type="button" name="remove_data" class="btn btn-primary" id="remove_data">Gerät zurücksetzen</button>
+						<button type="button"  class="btn btn-primary" id="submit_data">Auswahl hinzufügen</button>
+						<button type="button"  class="btn btn-primary" id="add_data">Gerät hinzufügen</button>
+						<button type="button"  class="btn btn-primary" id="remove_data">Gerät zurücksetzen</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="container-fluid">
-			<div class="Graphrows">
-				<div class="Graph_1" style="border: 1px solid #dddddd; border-radius: 4px; justify-content: center; align-items: center; margin-left:30%; margin-right:30%;"> 
-					<div class="card mt-4">
-						<div class="card-header">Doughnut Chart</div>
+			<div class="grid-container">
+				
+				<div class="grid-item" style="border: 1px solid #dddddd; border-radius: 4px;">
+					<div class="card mt-4 mb-4">
+						<div class="card-header">Persönliche Nutzung</div>
 						<div class="card-body">
 							<div class="chart-container pie-chart">
-								<canvas id="doughnut_chart"></canvas>
+								<canvas id="doughnut_chart_2"></canvas>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="Graph_2" style="border: 1px solid #dddddd; border-radius: 4px; justify-content: center; align-items: center; margin-left:30%; margin-right:30%;">
+				<div class="grid-item" style="border: 1px solid #dddddd; border-radius: 4px;">
 					<div class="card mt-4 mb-4">
-						<div class="card-header">Bar Chart</div>
+						<div class="card-header">Persönliche Nutzung</div>
 						<div class="card-body">
 							<div class="chart-container pie-chart">
 								<canvas id="bar_chart"></canvas>
@@ -120,9 +145,19 @@ $data = json_decode(file_get_contents('geraete.json'), true);
 						</div>
 					</div>
 				</div>
-				<div class="Graph_2" style="border: 1px solid #dddddd; border-radius: 4px; justify-content: center; align-items: center; margin-left:30%; margin-right:30%;">
+				<div class="grid-item" style="border: 1px solid #dddddd; border-radius: 4px;"> 
+					<div class="card mt-4">
+						<div class="card-header">Allgemeine Nutzung</div>
+						<div class="card-body">
+							<div class="chart-container pie-chart">
+								<canvas id="doughnut_chart"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="grid-item" style="border: 1px solid #dddddd; border-radius: 4px;">
 					<div class="card mt-4 mb-4">
-						<div class="card-header">Bar Chart</div>
+						<div class="card-header">Allgemeine Nutzung</div>
 						<div class="card-body">
 							<div class="chart-container pie-chart">
 								<canvas id="bar_chart_2"></canvas>
@@ -157,6 +192,28 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$('#submit_data').attr('disabled', false);
+
+				makechart();
+				makechart_id();
+			}
+		})
+
+	});
+	$('#add_data').click(function(){
+		
+		var geraete_name = [document.getElementById("textfill").value,"<?php echo $user['id'] ?>"];
+
+		$.ajax({
+			url:"data.php",
+			method:"POST",
+			data:{action:'insert', geraete_name:geraete_name},
+			beforeSend:function()
+			{
+				$('#add_data').attr('disabled', 'disabled');
+			},
+			success:function(data)
+			{
+				$('#add_data').attr('disabled', false);
 
 				makechart();
 				makechart_id();
@@ -310,6 +367,12 @@ $(document).ready(function(){
 					type:'bar',
 					data:chart_data,
 					options:options
+				});
+				var group_chart2 = $('#doughnut_chart_2');
+
+				var graph2 = new Chart(group_chart2, {
+					type:"doughnut",
+					data:chart_data
 				});
 			}
 		})
