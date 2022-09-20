@@ -62,7 +62,13 @@ if(isset($_POST["action"]))
 
 		foreach($result as $row)
 		{
-			srand(ord($row["geraete_name"]));
+
+			$a=(str_split($row["geraete_name"],1));
+			$x=0;
+			foreach ($a as $i) {
+				$x = $x + ord($i);
+			}
+			srand($x);
 			$data[] = array(
 				'geraete_name'		=>	$row["geraete_name"],
 				'total'			=>	$row["Total"],
@@ -100,7 +106,12 @@ if(isset($_POST["action"]))
 
 		foreach($result as $row)
 		{
-			srand(ord($row["geraete_name"]));
+			$a=(str_split($row["geraete_name"],1));
+			$x=0;
+			foreach ($a as $i) {
+				$x = $x + ord($i);
+			}
+			srand($x);
 			$data[] = array(
 				'geraete_name'		=>	$row["geraete_name"],
 				'total'			=>	$row["Total"],
