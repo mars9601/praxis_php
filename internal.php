@@ -177,7 +177,6 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$('#submit_data').attr('disabled', false);
-
 				makechart();
 				makechart_id();
 			}
@@ -201,6 +200,8 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$('#add_data').attr('disabled', false);
+				alert("Gerät erfolgreich hinzugefügt!");
+				window.location.reload();
 
 				makechart();
 				makechart_id();
