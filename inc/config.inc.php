@@ -1,5 +1,5 @@
 <?php
-//Tragt hier eure Verbindungsdaten zur Datenbank ein
+//tragt hier eure verbindungsdaten zur datenbank ein
 $db_host = 'localhost';
 $db_name = 'praxis login';
 $db_user = 'root';

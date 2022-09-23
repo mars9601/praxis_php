@@ -8,7 +8,7 @@ include("templates/header.inc.php")
 <div class="container main-container registration-form">
 <h1>Registrierung</h1>
 <?php
-$showFormular = true; //Variable ob das Registrierungsformular anezeigt werden soll
+$showFormular = true; //variable ob das registrierungsformular anezeigt werden soll
  
 if(isset($_GET['register'])) {
 	$error = false;
@@ -36,7 +36,7 @@ if(isset($_GET['register'])) {
 		$error = true;
 	}
 	
-	//Überprüfe, dass die E-Mail-Adresse noch nicht registriert wurde
+	//ueberpruefe, dass die e-mail-adresse noch nicht registriert wurde
 	if(!$error) { 
 		$statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
 		$result = $statement->execute(array('email' => $email));
@@ -48,7 +48,7 @@ if(isset($_GET['register'])) {
 		}	
 	}
 	
-	//Keine Fehler, wir können den Nutzer registrieren
+	//keine fehler, wir koennen den nutzer registrieren
 	if(!$error) {	
 		$passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
 		

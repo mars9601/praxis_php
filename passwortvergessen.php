@@ -29,9 +29,9 @@ if(isset($_GET['send']) ) {
 			$result = $statement->execute(array('passwortcode' => sha1($passwortcode), 'userid' => $user['id']));
 			
 			$empfaenger = $user['email'];
-			$betreff = "Neues Passwort für deinen Account auf www.php-einfach.de"; //Ersetzt hier den Domain-Namen
-			$from = "From: Vorname Nachname <absender@domain.de>"; //Ersetzt hier euren Name und E-Mail-Adresse
-			$url_passwortcode = getSiteURL().'passwortzuruecksetzen.php?userid='.$user['id'].'&code='.$passwortcode; //Setzt hier eure richtige Domain ein
+			$betreff = "Neues Passwort für deinen Account auf www.______.de"; //ersetzt hier den domain-namen
+			$from = "From: Vorname Nachname <absender@domain.de>"; //ersetzt hier euren Name und e-mail-adresse
+			$url_passwortcode = getSiteURL().'passwortzuruecksetzen.php?userid='.$user['id'].'&code='.$passwortcode; //setzt hier eure richtige domain ein (in praxis projekt zum testen noch nich verwendet)
 			$text = 'Hallo '.$user['vorname'].',
 für deinen Account auf www.php-einfach.de wurde nach einem neuen Passwort gefragt. Um ein neues Passwort zu vergeben, rufe innerhalb der nächsten 24 Stunden die folgende Website auf:
 '.$url_passwortcode.'

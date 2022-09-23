@@ -3,7 +3,7 @@ session_start();
 require_once("inc/config.inc.php");
 require_once("inc/functions.inc.php");
 
-//Überprüfe, dass der User eingeloggt ist
+//ueberpruefe, dass der User eingeloggt ist
 //Der Aufruf von check_user() muss in alle internen Seiten eingebaut sein
 $user = check_user();
 
@@ -104,7 +104,7 @@ endif;
     <li role="presentation"><a href="#passwort" aria-controls="messages" role="tab" data-toggle="tab">Passwort</a></li>
   </ul>
 
-  <!-- Persönliche Daten-->
+  <!-- persoenliche Daten-->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="data">
     	<br>
@@ -131,7 +131,7 @@ endif;
     	</form>
     </div>
     
-    <!-- Änderung der E-Mail-Adresse -->
+    <!-- aenderung der e-mail-adresse -->
     <div role="tabpanel" class="tab-pane" id="email">
     	<br>
     	<p>Zum Änderen deiner E-Mail-Adresse gib bitte dein aktuelles Passwort sowie die neue E-Mail-Adresse ein.</p>
@@ -166,7 +166,7 @@ endif;
     	</form>
     </div>
     
-    <!-- Änderung des Passworts -->
+    <!-- aenderung des passworts -->
     <div role="tabpanel" class="tab-pane" id="passwort">
     	<br>
     	<p>Zum Änderen deines Passworts gib bitte dein aktuelles Passwort sowie das neue Passwort ein.</p>

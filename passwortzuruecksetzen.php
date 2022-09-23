@@ -12,12 +12,12 @@ $showForm = true;
 $userid = $_GET['userid'];
 $code = $_GET['code'];
  
-//Abfrage des Nutzers
+//abfrage des nutzers
 $statement = $pdo->prepare("SELECT * FROM users WHERE id = :userid");
 $result = $statement->execute(array('userid' => $userid));
 $user = $statement->fetch();
  
-//Überprüfe dass ein Nutzer gefunden wurde und dieser auch ein Passwortcode hat
+//ueberpruefe dass ein nutzer gefunden wurde und dieser auch ein passwortcode hat
 if($user === null || $user['passwortcode'] === null) {
 	error("Der Benutzer wurde nicht gefunden oder hat kein neues Passwort angefordert.");
 }
@@ -27,12 +27,12 @@ if($user['passwortcode_time'] === null || strtotime($user['passwortcode_time']) 
 }
  
  
-//Überprüfe den Passwortcode
+//ueberpruefe den passwortcode
 if(sha1($code) != $user['passwortcode']) {
 	error("Der übergebene Code war ungültig. Stell sicher, dass du den genauen Link in der URL aufgerufen hast. Solltest du mehrmals die Passwort-vergessen Funktion genutzt haben, so ruf den Link in der neuesten E-Mail auf.");
 }
  
-//Der Code war korrekt, der Nutzer darf ein neues Passwort eingeben
+//Der code war korrekt, der nutzer darf ein neues passwort eingeben
  
 if(isset($_GET['send'])) {
 	$passwort = $_POST['passwort'];
@@ -40,7 +40,7 @@ if(isset($_GET['send'])) {
 	
 	if($passwort != $passwort2) {
 		$msg =  "Bitte identische Passwörter eingeben";
-	} else { //Speichere neues Passwort und lösche den Code
+	} else { //speichere neues passwort und loesche den code
 		$passworthash = password_hash($passwort, PASSWORD_DEFAULT);
 		$statement = $pdo->prepare("UPDATE users SET passwort = :passworthash, passwortcode = NULL, passwortcode_time = NULL WHERE id = :userid");
 		$result = $statement->execute(array('passworthash' => $passworthash, 'userid'=> $userid ));

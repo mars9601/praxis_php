@@ -1,11 +1,12 @@
 <?php
 
 //data.php
-
+//login daten für sql datenbank
 $connect = new PDO("mysql:host=localhost;dbname=praxis login", "root", "");
 
 if(isset($_POST["action"]))
 {
+	//einfügen einenes vorhandenen geraets
 	if($_POST["action"] == 'insert')
 	{
 		$data = array(
@@ -29,6 +30,7 @@ if(isset($_POST["action"]))
 
 	if($_POST["action"] == 'remove')
 	{
+		//eintrag aus datenbank entfernen
 		$data = array(
 			':geraete_name'		=>	$_POST["geraete_name"]
 		);
@@ -49,6 +51,7 @@ if(isset($_POST["action"]))
 
 	if($_POST["action"] == 'fetch')
 	{
+		//eintraege aus datenbank auslesen
 		$query = "
 		SELECT geraete_name, COUNT(geraete_id) AS Total 
 		FROM geraete_liste 
@@ -62,7 +65,7 @@ if(isset($_POST["action"]))
 
 		foreach($result as $row)
 		{
-
+			//farbe fuer graph festlegen
 			$a=(str_split($row["geraete_name"],1));
 			$x=0;
 			foreach ($a as $i) {
@@ -87,11 +90,7 @@ if(isset($_POST["action"]))
 
 	if($_POST["action"] == 'fetch_id')
 	{
-
-		
-		
-		
-	
+		//eintraege aus datenbank auslesen (für jeden benutzer einzeln)
 		$fill = $_POST["geraete_name"][1];
 		$query = "
 		SELECT geraete_name, COUNT(geraete_id) AS Total 
@@ -106,6 +105,7 @@ if(isset($_POST["action"]))
 
 		foreach($result as $row)
 		{
+			//farbe fuer graph festlegen
 			$a=(str_split($row["geraete_name"],1));
 			$x=0;
 			foreach ($a as $i) {
